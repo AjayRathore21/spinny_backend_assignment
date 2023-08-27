@@ -26,20 +26,39 @@ SECRET_KEY = "django-insecure-1q_c7u1+@#=2f2^*)cjzpcrot9go-%8=!2*)c9$yapx$!yo+iz
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
+A1 = 100
+V1 = 1000
+L1 = 100
+L2 = 50
+
+
+class InvalidInputException(Exception):
+    pass
+
+
+class LoginRequiredException(Exception):
+    pass
+
+
+class PermissionDeniedException(Exception):
+    pass
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "rest_framework",
+    "rest_framework.authtoken",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "rest_framework",
     "store",
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -50,6 +69,19 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.IsAuthenticated',
+            'rest_framework.permissions.IsAdminUser'
+        ],
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.BasicAuthentication',  # enables simple command line authentication
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.TokenAuthentication',
+        )
+    }
+
 
 ROOT_URLCONF = "spinny_backend_assignment.urls"
 
